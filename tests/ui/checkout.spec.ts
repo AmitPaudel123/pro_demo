@@ -37,45 +37,45 @@ test.describe("Checkout Process", () => {
     await checkoutPage.checkoutBtn.click();
     await expect(page).toHaveURL(/.*checkout-step-one/);
     await expect(page).toHaveTitle(/Swag Labs/);
+  });
 
-    test("shows first name required error when continuing without information", async ({
-      page,
-    }) => {
-      await checkoutPage.checkoutBtn.click();
-      await checkoutPage.clickContinue();
-      await expect(
-        page.getByText("Error: First Name is required"),
-      ).toBeVisible();
-    });
+  test("shows first name required error when continuing without information", async ({
+    page,
+  }) => {
+    await checkoutPage.checkoutBtn.click();
+    await checkoutPage.clickContinue();
+    await expect(page.locator(".error-message-container")).toContainText(
+      "Error: First Name is required",
+    );
+  });
 
-    test("shows last name required error when first name is provided only", async ({
-      page,
-    }) => {
-      await checkoutPage.checkoutBtn.click();
-      await checkoutPage.firstNameInput.fill("John");
-      await checkoutPage.clickContinue();
-      await expect(
-        page.getByText("Error: Last Name is required"),
-      ).toBeVisible();
-    });
+  test("shows last name required error when first name is provided only", async ({
+    page,
+  }) => {
+    await checkoutPage.checkoutBtn.click();
+    await checkoutPage.firstNameInput.fill("John");
+    await checkoutPage.clickContinue();
+    await expect(page.locator(".error-message-container")).toContainText(
+      "Error: Last Name is required",
+    );
+  });
 
-    test("allows checkout with numeric name fields", async ({ page }) => {
-      await checkoutPage.checkoutBtn.click();
-      await checkoutPage.firstNameInput.fill("54544");
-      await checkoutPage.lastNameInput.fill("123");
-      await checkoutPage.postalCodeInput.fill("12345");
-      await checkoutPage.clickContinue();
-      await expect(page).toHaveURL(/.*checkout-step-two/);
-    });
+  test("allows checkout with numeric name fields", async ({ page }) => {
+    await checkoutPage.checkoutBtn.click();
+    await checkoutPage.firstNameInput.fill("54544");
+    await checkoutPage.lastNameInput.fill("123");
+    await checkoutPage.postalCodeInput.fill("12345");
+    await checkoutPage.clickContinue();
+    await expect(page).toHaveURL(/.*checkout-step-two/);
+  });
 
-    test("completes checkout successfully with valid information", async ({
-      page,
-    }) => {
-      await checkoutPage.checkoutBtn.click();
-      await checkoutPage.fillCheckoutInformation("John", "Doe", "12345");
-      await expect(page).toHaveURL(/.*checkout-step-two/);
-      await checkoutPage.finishButton.click();
-      await expect(page).toHaveURL(/.*checkout-complete/);
-    });
+  test("completes checkout successfully with valid information", async ({
+    page,
+  }) => {
+    await checkoutPage.checkoutBtn.click();
+    await checkoutPage.fillCheckoutInformation("John", "Doe", "12345");
+    await expect(page).toHaveURL(/.*checkout-step-two/);
+    await checkoutPage.finishButton.click();
+    await expect(page).toHaveURL(/.*checkout-complete/);
   });
 });
