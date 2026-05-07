@@ -4,19 +4,20 @@ import { CheckoutPage } from "../pages/checkout";
 import { test, expect } from "@playwright/test";
 import { users } from "../utils/userDetails";
 
-let loginPage: LoginPage;
+// let loginPage: LoginPage;
 let inventoryPage: InventoryPage;
 let checkoutPage: CheckoutPage;
 
 test.beforeEach(async ({ page }) => {
-  loginPage = new LoginPage(page);
+  // loginPage = new LoginPage(page);
   inventoryPage = new InventoryPage(page);
   checkoutPage = new CheckoutPage(page);
-  await loginPage.goto();
-  await loginPage.login(
-    users.standard_user.username,
-    users.standard_user.password,
-  );
+  // await loginPage.goto();
+  // await loginPage.login(
+  //   users.standard_user.username,
+  //   users.standard_user.password,
+  // );
+  await page.goto("https://www.saucedemo.com/inventory.html");
   await inventoryPage.addToCart();
   await inventoryPage.shoppingCart.click();
 });

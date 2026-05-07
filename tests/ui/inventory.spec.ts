@@ -1,23 +1,15 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/login";
 import { InventoryPage } from "../pages/inventory";
-import { users } from "../utils/userDetails.ts";
 
 test.describe("Inventory Page Tests", () => {
-  let loginPage: LoginPage;
   let inventoryPage: InventoryPage;
-  const username = users.standard_user.username;
-  const password = users.standard_user.password;
-  const aToZOption = "az";
   const zToAOption = "za";
   const lowToHighOption = "lohi";
   const highToLowOption = "hilo";
 
   test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
     inventoryPage = new InventoryPage(page);
-    await page.goto("https://www.saucedemo.com");
-    await loginPage.login(username, password);
+    await page.goto("https://www.saucedemo.com/inventory.html");
   });
 
   //test to verify that user succssfully logged in and inventory page is displayed
